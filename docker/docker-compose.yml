@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mayriadb_opencart
+    hostname: mariadb   
+    environment:
+      - MARIADB_DATABASE=opencart
+      - MARIADB_USER=hungnv
+      - MARIADB_PASSWORD=123456
+      - MARIADB_ROOT_PASSWORD=123456
+    restart: always
+    volumes:
+      - /opencart/mariadb:/var/lib/mysql
+  opencart:
+    build: .
+    container_name: web_opencart
+    hostname: opencart
+    restart: always       
+    depends_on:
+      - mariadb
+volumes:
+  mysql_data:
+    driver: local
+  opencart_html:
+    driver: local
